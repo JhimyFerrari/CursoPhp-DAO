@@ -158,6 +158,18 @@ Uma PROCEDURE (também chamada stored procedure) é uma subrotina que fica armaz
 			$this->setData($results[0]);
 		}
 	}
+
+	public function update($login, $password){
+		$this->setDeslogin($login);
+		$this->setDessenha($password);
+
+		$sql = new Sql();
+		$sql->exequery("UPDATE tb_usuarios set deslogin =:LOGIN, dessenha = :PASSWORD WHERE id = :ID", array(
+		':LOGIN'=>$this->getDeslogin(),
+		':PASSWORD'=>$this ->getDessenha(),
+		':ID'=>$this->getId()
+		));
+	}
 	
 	public function __construct($login = "", $password="")
 	{
@@ -177,6 +189,9 @@ Uma PROCEDURE (também chamada stored procedure) é uma subrotina que fica armaz
             )
         );
     }
+
+
+
 }
 
 ?>

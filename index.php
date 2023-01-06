@@ -36,11 +36,18 @@ require_once("config.php");
 //echo $usuario
 
 
+//Criando um novo usuario
+//$aluno = new Usuario("aluno","1a2b");
 
-$aluno = new Usuario("aluno","1a2b");
+//$aluno->insert();
 
-$aluno->insert();
+//echo $aluno;
 
-echo $aluno;
+
+$usuario = new Usuario();
+$usuario->loadById(8);
+
+$usuario->update("professor", "asfd321");
+
 
 ?>
