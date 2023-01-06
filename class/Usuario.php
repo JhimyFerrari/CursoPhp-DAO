@@ -83,15 +83,8 @@ class Usuario {
             ":ID" => $id
         )
         );
-        if (isset($result)) {
-            $row = $result[0];
-            $this->setId($row["id"]);
-        
-            $this->setDeslogin($row["deslogin"]);
-        
-            $this->setDessenha($row["dessenha"]);
-        
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+        if (count($result)>0) {
+			$this->setData($result[0]);
         
         } }
 
@@ -126,15 +119,8 @@ class Usuario {
         )
         );
         if (isset($result)) {
-            $row = $result[0];
-            $this->setId($row["id"]);
-        
-            $this->setDeslogin($row["deslogin"]);
-        
-            $this->setDessenha($row["dessenha"]);
-        
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
-        
+			$this->setData($result[0]);
+            
         }
 		else {
 			throw new Exception("Login e/ou senha invalidos.");
@@ -143,8 +129,42 @@ class Usuario {
 	}
 
 
+	public function setData($data)
+	{
+		$this->setId($data["id"]);
+        
+		$this->setDeslogin($data["deslogin"]);
 	
+		$this->setDessenha($data["dessenha"]);
+	
+		$this->setDtcadastro(new DateTime($data['dtcadastro']));
+	
+		# code...
+	}
+	public function insert()
+	{
+		$sql = new Sql();
+		//                      chamado de uma procedure
+		/*/
+Uma PROCEDURE (também chamada stored procedure) é uma subrotina que fica armazenada no banco de dados. Uma PROCEDURE tem um nome, uma lista de parâmetros e declarações de comandos SQL.
+		*/
+		$results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+			":LOGIN"=>$this->getDeslogin(),
+			":PASSWORD"=>$this->getDessenha()
+		)
+		);
+		if (isset($results)) {
+			# code...
+			$this->setData($results[0]);
+		}
+	}
+	
+	public function __construct($login = "", $password="")
+	{
+		$this->setDeslogin($login);
+		$this->setDessenha($password);
 		
+	}
     public function __toString()
     {
         return json_encode(
