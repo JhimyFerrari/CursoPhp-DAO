@@ -95,6 +95,56 @@ class Usuario {
         
         } }
 
+		//carrega uma lista de usuarios
+		public static function getList(){  //como não tem nenhum $this, foi possivel torna-lo static para assim poder atuar sem necessidade de declaração
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_usuarios ORDER BY id");
+		}
+		
+
+		//busca por usuario
+		public static function search($login)
+		{
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_usuarios where deslogin Like :SEARCH ORDER BY deslogin", array(
+			':SEARCH'=>"%".$login."%"
+		)
+		);
+		}
+
+		public function login($login, $password)
+	{
+		# code...
+		$sql = new Sql();
+
+        $result = $sql->select("SELECT * FROM tb_usuarios where deslogin = :LOGIN AND dessenha = :PASSWORD", array(
+            ":LOGIN" => $login,
+			":PASSWORD"=>$password
+        )
+        );
+        if (isset($result)) {
+            $row = $result[0];
+            $this->setId($row["id"]);
+        
+            $this->setDeslogin($row["deslogin"]);
+        
+            $this->setDessenha($row["dessenha"]);
+        
+            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+        
+        }
+		else {
+			throw new Exception("Login e/ou senha invalidos.");
+			
+		}
+	}
+
+
+	
+		
     public function __toString()
     {
         return json_encode(
