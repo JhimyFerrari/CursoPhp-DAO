@@ -7,10 +7,15 @@
 
 require_once("config.php");
 
-$sql = new Sql();
+//$sql = new Sql();
 
-$texto = $sql->select("SELECT * FROM tb_usuarios");
+//$texto = $sql->select("SELECT * FROM tb_usuarios");
 
-echo json_encode($texto);
+//echo json_encode($texto);
+
+$root = new Usuario();
+$root->loadById(3);
+
+echo $root;
 
 ?>
