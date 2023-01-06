@@ -44,10 +44,17 @@ require_once("config.php");
 //echo $aluno;
 
 
-$usuario = new Usuario();
-$usuario->loadById(8);
+//$usuario = new Usuario();
+//$usuario->loadById(8);
 
-$usuario->update("professor", "asfd321");
+//$usuario->update("professor", "asfd321");
+
+$usuario = new Usuario();
+$usuario->loadById(7);
+
+$usuario->delete();
+
+echo $usuario;
 
 
 ?>

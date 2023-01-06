@@ -170,6 +170,19 @@ Uma PROCEDURE (também chamada stored procedure) é uma subrotina que fica armaz
 		':ID'=>$this->getId()
 		));
 	}
+
+	public function delete(){
+		$sql = new Sql();
+		$sql->exequery("DELETE FROM tb_usuarios WHERE id =:ID", array(
+			':ID'=>$this->getId()
+		)
+		);
+
+		$this->setId(0);
+		$this->setDeslogin("");
+		$this->setDessenha("");
+		$this->setDtcadastro(new DateTime());
+	}
 	
 	public function __construct($login = "", $password="")
 	{
